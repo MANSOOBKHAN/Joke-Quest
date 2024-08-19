@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comedy Show Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>joke Quest</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Comedy Show Generator</h1>
-        <form id="comedy-form">
-            <input type="text" id="input" placeholder="Enter a topic" required>
-            <button type="submit">Get Joke</button>
-        </form>
-        <div id="result"></div>
+        <h1>joke Quest</h1>
+        <select id="topic">
+            <option value="Programming">Programming</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+            <option value="Dark">Dark</option>
+            <option value="Pun">Pun</option>
+            <option value="Spooky">Spooky</option>
+            <option value="Christmas">Christmas</option>
+        </select>
+        <button id="fetchJoke" type="button">Get a Joke</button>
+        <p id="joke">Select a topic and click the button to get a joke!</p>
     </div>
     <script src="index.js"></script>
 </body>
