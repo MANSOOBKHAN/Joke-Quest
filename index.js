@@ -1,28 +1,25 @@
-document.getElementById('comedy-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
+document.addEventListener('DOMContentLoaded', () => {
+    const jokeElement = document.getElementById('joke');
+    const topicSelect = document.getElementById('topic');
+    const fetchButton = document.getElementById('fetchJoke');
 
-    const input = document.getElementById('input').value; // Get user input
-    const resultDiv = document.getElementById('result'); // Where we’ll display the joke
-
-    try {
-        // Fetch a joke from JokeAPI
-        const response = await fetch(`/api/generate-comedy?topic=${encodeURIComponent(input)}`);
-
-        // Check if the response is OK
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json(); // Parse the JSON data
-
-        // Display the joke
-        if (data.joke) {
-            resultDiv.textContent = data.joke;
-        } else {
-            resultDiv.textContent = 'No joke found for this topic.';
-        }
-    } catch (error) {
-        // Handle errors
-        resultDiv.textContent = 'Failed to fetch joke. Please try again.';
-    }
+    fetchButton.addEventListener('click', () => {
+        const topic = topicSelect.value;
+        fetch(`/joke?topic=${topic}`)
+            .then(response => response.json())
+            .then(data => {
+                // Display the joke or an error message
+                if (data.joke) {
+                    jokeElement.textContent = data.joke;
+                } else if (data.setup && data.punchline) {
+                    jokeElement.textContent = `${data.setup} - ${data.punchline}`;
+                } else {
+                    jokeElement.textContent = 'No joke available for this topic';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching joke:', error);
+                jokeElement.textContent = 'Failed to fetch joke';
+            });
+    });
 });
